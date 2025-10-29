@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to right, #ff6ec7 0%, #fff 100%); /* Cambié el gradiente a rosa y blanco */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .login-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px 60px;
+            width: 100%;
+            max-width: 400px;
+            transition: all 0.3s ease;
+        }
+        .login-container h2 {
+            font-size: 26px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #333;
+        }
+        .form-group {
+            position: relative;
+            margin-bottom: 30px;
+        }
+        .form-group label {
+            position: absolute;
+            top: 12px;
+            left: 15px;
+            color: #aaa;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus {
+            border-color: #ff6ec7; /* Cambié el color del borde al rosa */
+        }
+        .form-group input:focus + label {
+            top: -10px;
+            left: 15px;
+            color: #ff6ec7;
+            font-size: 12px;
+        }
+        .form-group input:valid + label {
+            top: -10px;
+            left: 15px;
+            color: #ff6ec7;
+            font-size: 12px;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: #ff6ec7; /* Cambié el color de fondo del botón a rosa */
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #ff3385; /* Color rosa más oscuro al hacer hover */
+        }
+        .error-message {
+            color: red;
+            text-align: center;
+            font-size: 14px;
+            margin-top: 15px;
+        }
+        .signup-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        .signup-link a {
+            color: #ff6ec7; /* Cambié el color del enlace a rosa */
+            text-decoration: none;
+        }
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-container">
+    <h2>Iniciar Sesión</h2>
+    <form th:action="@{/usuarios/login}" th:object="${usuario}" method="post">
+        <div class="form-group">
+            <input type="text" id="login" th:field="*{login}" required />
+            <label for="login">Login</label>
+        </div>
+        <div class="form-group">
+            <input type="password" id="pass" th:field="*{pass}" required />
+            <label for="pass">Contraseña</label>
+        </div>
+        <button type="submit">Entrar</button>
+    </form>
+
+    <p class="error-message" th:text="${error}"></p>
+
+    <div class="signup-link">
+        <p>¿No tienes cuenta? <a href="/usuarios/registro">Regístrate aquí</a></p>
+    </div>
+</div>
+
+</body>
+</html>
