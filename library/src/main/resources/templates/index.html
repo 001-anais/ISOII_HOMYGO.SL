@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido a HomyGo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #ff66b2;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            margin: 0;
+        }
+        section {
+            padding: 50px 20px;
+            text-align: center;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .button {
+            display: inline-block;
+            padding: 15px 30px;
+            background-color: #ff66b2;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+            width: 200px;
+            text-align: center;
+        }
+        .button:hover {
+            background-color: #ff4d94;
+        }
+        .search-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 40px;
+            display: inline-block;
+            width: 80%;
+            max-width: 600px;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+        button {
+            background-color: #ff66b2;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #ff4d94;
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #ff66b2;
+            color: white;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Bienvenido a HomyGo</h1>
+    </header>
+
+    <section>
+        <h2>Comienza a explorar nuestros inmuebles</h2>
+        <div class="button-container">
+            <a href="/usuarios/login" class="button">Iniciar sesión</a>
+            <a href="/usuarios/registro" class="button">Registrarse</a>
+            <a href="/busqueda" class="button">Buscar inmuebles</a>
+        </div>
+    </section>
+
+    <section>
+        <h2>Busca tu próximo destino en España</h2>
+        <div class="search-container">
+            <form action="/resultados" method="get">
+                <label for="zona">Zona (ciudad o región):</label>
+                <input type="text" id="zona" name="zona" placeholder="Ejemplo: Madrid, Barcelona" required>
+
+                <label for="fechaInicio">Fecha de entrada:</label>
+                <input type="date" id="fechaInicio" name="fechaInicio" required>
+
+                <label for="fechaFin">Fecha de salida:</label>
+                <input type="date" id="fechaFin" name="fechaFin" required>
+
+                <button type="submit">Buscar inmuebles</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 HomyGo. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>

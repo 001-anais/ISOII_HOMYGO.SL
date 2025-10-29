@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmación de Reserva</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to right, #ff6ec7 0%, #fff 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px 60px;
+            width: 100%;
+            max-width: 500px;
+        }
+        h2 {
+            font-size: 26px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #333;
+        }
+        p {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        a {
+            color: #ff6ec7;
+            text-decoration: none;
+            font-size: 16px;
+            text-align: center;
+            display: block;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Confirmación de Reserva</h2>
+    <div th:if="${reserva != null}">
+        <p><strong>ID Reserva:</strong> <span th:text="${reserva.id}"></span></p>
+        <p><strong>Inquilino:</strong> <span th:text="${reserva.inquilino?.nombre}"></span></p>
+        <p><strong>Inmueble:</strong> <span th:text="${reserva.inmueble?.direccion}"></span></p>
+        <p><strong>Fechas:</strong> <span th:text="${reserva.fechaInicio}"></span> a <span th:text="${reserva.fechaFin}"></span></p>
+    </div>
+    <div th:if="${reserva == null}">
+        <p>No se encontró la reserva.</p>
+    </div>
+    <p><a th:href="@{/reservas/listar}">Volver</a></p>
+</div>
+
+</body>
+</html>
