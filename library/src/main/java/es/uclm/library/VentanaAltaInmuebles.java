@@ -26,8 +26,9 @@ public class VentanaAltaInmuebles {
         return "inmueble_nuevo";
     }
 
+    // Guardar inmueble (ahora funciona con fechas sin error 400)
     @PostMapping("/guardar")
-    public String registrarInmueble(@ModelAttribute Inmueble inmueble, Model model) {
+    public String registrarInmueble(@ModelAttribute Inmueble inmueble) {
         gestorInmuebles.registrarInmueble(inmueble);
         return "redirect:/inmuebles/listar";
     }
