@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Inmuebles | HomyGo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to right, #ff6ec7 0%, #fff 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 40px 60px;
+            width: 100%;
+            max-width: 500px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #333;
+        }
+        label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: #ff6ec7;
+            border: none;
+            color: white;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #ff3385;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Buscar tu alojamiento ideal</h2>
+    <form th:action="@{/resultados}" method="get">
+        <label for="zona">Zona o ciudad:</label>
+        <input type="text" id="zona" name="zona" placeholder="Madrid, Barcelona..." required>
+
+        <label for="precioMaximo">Precio máximo por noche (€):</label>
+        <input type="number" id="precioMaximo" name="precioMaximo" step="0.01" required>
+
+        <label for="fechaInicio">Fecha de entrada:</label>
+        <input type="date" id="fechaInicio" name="fechaInicio" required>
+
+        <label for="fechaFin">Fecha de salida:</label>
+        <input type="date" id="fechaFin" name="fechaFin" required>
+
+        <button type="submit">Buscar</button>
+    </form>
+</div>
+
+</body>
+</html>
