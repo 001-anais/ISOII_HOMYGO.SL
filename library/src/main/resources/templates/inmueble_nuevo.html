@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nuevo Inmueble</title>
+    <title>Registrar Nuevo Inmueble | HomyGo</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -13,32 +13,24 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            margin: 0;
         }
         .container {
             background: white;
-            border-radius: 10px;
+            border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             padding: 40px 60px;
             width: 100%;
-            max-width: 400px;
+            max-width: 500px;
         }
         h2 {
-            font-size: 26px;
-            margin-bottom: 20px;
             text-align: center;
+            margin-bottom: 25px;
             color: #333;
         }
         .form-group {
             position: relative;
-            margin-bottom: 30px;
-        }
-        .form-group label {
-            position: absolute;
-            top: 12px;
-            left: 15px;
-            color: #aaa;
-            font-size: 14px;
-            transition: 0.3s;
+            margin-bottom: 25px;
         }
         .form-group input {
             width: 100%;
@@ -52,22 +44,25 @@
         .form-group input:focus {
             border-color: #ff6ec7;
         }
-        .form-group input:focus + label {
-            top: -10px;
+        .form-group label {
+            position: absolute;
+            top: -8px;
             left: 15px;
-            color: #ff6ec7;
-            font-size: 12px;
+            background-color: white;
+            padding: 0 5px;
+            font-size: 14px;
+            color: #555;
         }
         button {
             width: 100%;
             padding: 15px;
             background-color: #ff6ec7;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
             color: white;
             font-size: 18px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s;
         }
         button:hover {
             background-color: #ff3385;
@@ -75,7 +70,6 @@
         .back-link {
             text-align: center;
             margin-top: 20px;
-            font-size: 14px;
         }
         .back-link a {
             color: #ff6ec7;
@@ -90,20 +84,39 @@
 
 <div class="container">
     <h2>Registrar Nuevo Inmueble</h2>
+
     <form th:action="@{/inmuebles/guardar}" th:object="${inmueble}" method="post">
+
         <div class="form-group">
-            <input type="text" th:field="*{direccion}" required />
+            <input type="text" th:field="*{direccion}" id="direccion" required />
             <label for="direccion">Dirección</label>
         </div>
+
         <div class="form-group">
-            <input type="number" th:field="*{precioNoche}" step="0.01" required />
-            <label for="precioNoche">Precio por Noche</label>
+            <input type="number" th:field="*{precioNoche}" id="precioNoche" step="0.01" required />
+            <label for="precioNoche">Precio por Noche (€)</label>
         </div>
-        <button type="submit">Guardar</button>
+
+        <div class="form-group">
+            <input type="text" th:field="*{imagen}" id="imagen" placeholder="https://..." />
+            <label for="imagen">URL de la imagen</label>
+        </div>
+
+        <div class="form-group">
+            <input type="date" th:field="*{disponibleDesde}" id="disponibleDesde" required />
+            <label for="disponibleDesde">Disponible Desde</label>
+        </div>
+
+        <div class="form-group">
+            <input type="date" th:field="*{disponibleHasta}" id="disponibleHasta" required />
+            <label for="disponibleHasta">Disponible Hasta</label>
+        </div>
+
+        <button type="submit">Guardar Inmueble</button>
     </form>
 
     <div class="back-link">
-        <p><a th:href="@{/inmuebles/listar}">Volver al listado de inmuebles</a></p>
+        <p><a th:href="@{/inmuebles/listar}">← Volver al listado de inmuebles</a></p>
     </div>
 </div>
 
