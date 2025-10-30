@@ -1,83 +1,242 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resultados</title>
+    <title>Resultados de Búsqueda | HomyGo</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Roboto', sans-serif;
-            background: linear-gradient(to right, #ff6ec7 0%, #fff 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            background: linear-gradient(to right, #ff6ec7, #ffffff);
+            margin: 0;
+            padding: 0;
         }
         .container {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            padding: 40px 60px;
-            width: 100%;
-            max-width: 800px;
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 20px;
         }
         h2 {
-            font-size: 26px;
-            margin-bottom: 20px;
             text-align: center;
             color: #333;
+            margin-bottom: 40px;
         }
-        table {
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        .card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: scale(1.03);
+        }
+        .card img {
             width: 100%;
-            margin-top: 20px;
-            border-collapse: collapse;
+            height: 200px;
+            object-fit: cover;
         }
-        th, td {
+        .card-content {
+            padding: 15px 20px;
+        }
+        .card-content h3 {
+            margin: 10px 0;
+            color: #333;
+        }
+        .card-content p {
+            color: #666;
+            margin: 5px 0;
+        }
+        .reserve-btn {
+            display: inline-block;
+            width: 100%;
             padding: 12px;
-            border: 1px solid #ddd;
-            text-align: left;
+            background-color: #ff6ec7;
+            color: white;
+            text-align: center;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
         }
-        th {
+        .reserve-btn:hover {
+            background-color: #ff3385;
+        }
+        .no-results {
+            text-align: center;
+            color: #777;
+            font-size: 18px;
+        }
+
+        /* ✅ MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: #fff;
+            border-radius: 10px;
+            padding: 30px;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: pop 0.3s ease-in-out;
+        }
+        @keyframes pop {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .modal h3 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .modal p {
+            color: #555;
+            font-size: 16px;
+            margin: 8px 0;
+        }
+        .modal-buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .confirm-btn, .cancel-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .confirm-btn {
             background-color: #ff6ec7;
             color: white;
         }
-        a {
-            color: #ff6ec7;
-            text-decoration: none;
+        .confirm-btn:hover {
+            background-color: #ff3385;
         }
-        a:hover {
-            text-decoration: underline;
+        .cancel-btn {
+            background-color: #ddd;
         }
-        .back-link {
-            text-align: center;
-            margin-top: 20px;
+        .cancel-btn:hover {
+            background-color: #bbb;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>Resultados de la búsqueda</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Dirección</th>
-                <th>Precio/Noche</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="r : ${resultados}">
-                <td th:text="${r.direccion}"></td>
-                <td th:text="${r.precioNoche}"></td>
-            </tr>
-        </tbody>
-    </table>
-    <div class="back-link">
-        <p><a th:href="@{/busqueda}">Nueva búsqueda</a></p>
+    <h2>Resultados de tu búsqueda</h2>
+
+    <div th:if="${#lists.isEmpty(resultados)}" class="no-results">
+        <p>No se encontraron inmuebles disponibles en esta zona o rango de fechas.</p>
+    </div>
+
+    <div th:if="${!#lists.isEmpty(resultados)}" class="grid">
+        <div class="card" th:each="i : ${resultados}">
+            <img th:src="${i.imagen != null and !i.imagen.isEmpty() ? i.imagen : '/img/default_house.jpg'}"
+                 alt="Imagen del inmueble">
+
+            <div class="card-content">
+                <h3 th:text="${i.direccion}">Dirección del inmueble</h3>
+                <p><strong>Precio:</strong> <span th:text="${i.precioNoche}"></span> €/noche</p>
+                <p><strong>Disponible:</strong> 
+                   <span th:text="${#dates.format(i.disponibleDesde, 'dd/MM/yyyy')}"></span> 
+                   - 
+                   <span th:text="${#dates.format(i.disponibleHasta, 'dd/MM/yyyy')}"></span>
+                </p>
+
+                <button class="reserve-btn"
+                        th:data-id="${i.id}"
+                        th:data-direccion="${i.direccion}"
+                        th:data-precio="${i.precioNoche}"
+                        th:data-fechainicio="${#dates.format(fechaInicio, 'dd/MM/yyyy')}"
+                        th:data-fechafin="${#dates.format(fechaFin, 'dd/MM/yyyy')}">
+                    Reservar ahora
+                </button>
+            </div>
+        </div>
     </div>
 </div>
+
+<!-- ✅ MODAL DE CONFIRMACIÓN -->
+<div id="confirmModal" class="modal">
+    <div class="modal-content">
+        <h3>Confirmar reserva</h3>
+        <p><strong>Inmueble:</strong> <span id="modalDireccion"></span></p>
+        <p><strong>Fechas:</strong> <span id="modalFechas"></span></p>
+        <p><strong>Precio por noche:</strong> €<span id="modalPrecio"></span></p>
+        <p><strong>Total estimado:</strong> €<span id="modalTotal"></span></p>
+
+        <div class="modal-buttons">
+            <button class="cancel-btn" onclick="closeModal()">Cancelar</button>
+            <button class="confirm-btn" id="confirmBtn">Confirmar y pagar</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const modal = document.getElementById('confirmModal');
+    let reservaInfo = {};
+
+    document.querySelectorAll('.reserve-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const id = btn.getAttribute('data-id');
+            const direccion = btn.getAttribute('data-direccion');
+            const precio = parseFloat(btn.getAttribute('data-precio'));
+            const fechaInicio = btn.getAttribute('data-fechainicio');
+            const fechaFin = btn.getAttribute('data-fechafin');
+
+            // Calcular total (simplemente 3 noches por ejemplo)
+            const total = (precio * 3).toFixed(2);
+
+            // Mostrar datos
+            document.getElementById('modalDireccion').textContent = direccion;
+            document.getElementById('modalFechas').textContent = `${fechaInicio} - ${fechaFin}`;
+            document.getElementById('modalPrecio').textContent = precio.toFixed(2);
+            document.getElementById('modalTotal').textContent = total;
+
+            reservaInfo = { id, fechaInicio, fechaFin };
+
+            modal.style.display = 'flex';
+        });
+    });
+
+    function closeModal() {
+        modal.style.display = 'none';
+    }
+
+    // Confirmar y redirigir
+    document.getElementById('confirmBtn').addEventListener('click', () => {
+        const url = `/reservas/crear_desde_busqueda?idInmueble=${reservaInfo.id}&fechaInicio=${reservaInfo.fechaInicio}&fechaFin=${reservaInfo.fechaFin}`;
+        window.location.href = url;
+    });
+
+    // Cerrar si se hace clic fuera
+    window.onclick = (event) => {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    }
+</script>
 
 </body>
 </html>
