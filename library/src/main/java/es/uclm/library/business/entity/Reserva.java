@@ -31,6 +31,9 @@ public class Reserva {
     @Temporal(TemporalType.DATE)
     private Date fechaFin;
 
+    private double precioTotal;
+    public double getPrecioTotal() { return precioTotal; }
+    public void setPrecioTotal(double precioTotal) { this.precioTotal = precioTotal; }
     public Reserva() {}
 
     public int getId() { return id; }
