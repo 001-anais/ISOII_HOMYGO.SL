@@ -1,8 +1,9 @@
 package es.uclm.library.business.entity;
 
 import jakarta.persistence.*;
+import java.util.Date;
 import java.util.*;
-
+import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "inmuebles")
 public class Inmueble {
@@ -42,4 +43,26 @@ public class Inmueble {
 
     public List<ListaDeseos> getListaDeseos() { return listaDeseos; }
     public void setListaDeseos(List<ListaDeseos> listaDeseos) { this.listaDeseos = listaDeseos; }
+
+@Temporal(TemporalType.DATE)
+@DateTimeFormat(pattern = "yyyy-MM-dd")
+private Date disponibleDesde;
+
+@Temporal(TemporalType.DATE)
+@DateTimeFormat(pattern = "yyyy-MM-dd")
+private Date disponibleHasta;
+    public Date getDisponibleDesde() { return disponibleDesde; }
+    public void setDisponibleDesde(Date disponibleDesde) { this.disponibleDesde = disponibleDesde; }
+
+    public Date getDisponibleHasta() { return disponibleHasta; }
+    public void setDisponibleHasta(Date disponibleHasta) { this.disponibleHasta = disponibleHasta; }
+    private String imagen;
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
 }
