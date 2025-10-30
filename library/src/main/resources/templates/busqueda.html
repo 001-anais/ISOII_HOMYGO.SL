@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Búsqueda de Inmuebles</title>
+    <title>Buscar Inmuebles | HomyGo</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -17,57 +17,37 @@
         .container {
             background: white;
             border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             padding: 40px 60px;
             width: 100%;
-            max-width: 400px;
+            max-width: 500px;
         }
         h2 {
-            font-size: 26px;
-            margin-bottom: 20px;
             text-align: center;
+            margin-bottom: 25px;
             color: #333;
         }
-        .form-group {
-            position: relative;
-            margin-bottom: 30px;
+        label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 8px;
         }
-        .form-group label {
-            position: absolute;
-            top: 12px;
-            left: 15px;
-            color: #aaa;
-            font-size: 14px;
-            transition: 0.3s;
-        }
-        .form-group input {
+        input {
             width: 100%;
-            padding: 15px;
-            font-size: 16px;
-            border: 2px solid #ddd;
+            padding: 12px;
+            margin-bottom: 20px;
             border-radius: 5px;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-        .form-group input:focus {
-            border-color: #ff6ec7;
-        }
-        .form-group input:focus + label {
-            top: -10px;
-            left: 15px;
-            color: #ff6ec7;
-            font-size: 12px;
+            border: 1px solid #ddd;
         }
         button {
             width: 100%;
             padding: 15px;
             background-color: #ff6ec7;
             border: none;
-            border-radius: 5px;
             color: white;
             font-size: 18px;
+            border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
         }
         button:hover {
             background-color: #ff3385;
@@ -77,16 +57,20 @@
 <body>
 
 <div class="container">
-    <h2>Búsqueda de Inmuebles</h2>
-    <form th:action="@{/busqueda}" method="post">
-        <div class="form-group">
-            <input type="text" name="direccion" required />
-            <label for="direccion">Dirección</label>
-        </div>
-        <div class="form-group">
-            <input type="number" name="precioMaximo" step="0.01" required />
-            <label for="precioMaximo">Precio máximo</label>
-        </div>
+    <h2>Buscar tu alojamiento ideal</h2>
+    <form th:action="@{/resultados}" method="get">
+        <label for="zona">Zona o ciudad:</label>
+        <input type="text" id="zona" name="zona" placeholder="Madrid, Barcelona..." required>
+
+        <label for="precioMaximo">Precio máximo por noche (€):</label>
+        <input type="number" id="precioMaximo" name="precioMaximo" step="0.01" required>
+
+        <label for="fechaInicio">Fecha de entrada:</label>
+        <input type="date" id="fechaInicio" name="fechaInicio" required>
+
+        <label for="fechaFin">Fecha de salida:</label>
+        <input type="date" id="fechaFin" name="fechaFin" required>
+
         <button type="submit">Buscar</button>
     </form>
 </div>
