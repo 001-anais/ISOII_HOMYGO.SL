@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Reservas | HomyGo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to right, #ff6ec7 0%, #fff 100%);
+            min-height: 100vh;
+            padding: 40px 0;
+        }
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 1000px;
+            margin: auto;
+            padding: 40px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #eee;
+            text-align: center;
+        }
+        th {
+            background-color: #ff6ec7;
+            color: white;
+        }
+        td {
+            color: #333;
+        }
+        .btn {
+            background-color: #ff6ec7;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #ff3385;
+        }
+        .empty {
+            text-align: center;
+            color: #777;
+            font-style: italic;
+            margin-top: 20px;
+        }
+        .back {
+            display: block;
+            margin-top: 25px;
+            text-align: center;
+            color: #ff6ec7;
+            text-decoration: none;
+        }
+        .back:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Mis Reservas</h2>
+
+    <table th:if="${reservas != null and !reservas.isEmpty()}">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Dirección</th>
+                <th>Entrada</th>
+                <th>Salida</th>
+				<th>Total (€)</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="r : ${reservas}">
+                <td th:text="${r.id}"></td>
+                <td th:text="${r.inmueble?.direccion}"></td>
+                <td th:text="${#dates.format(r.fechaInicio, 'dd/MM/yyyy')}"></td>
+                <td th:text="${#dates.format(r.fechaFin, 'dd/MM/yyyy')}"></td>
+				<td th:text="${#numbers.formatDecimal(r.precioTotal, 2, 2)}"></td>
+
+                <td>
+                    <a th:href="@{/reservas/confirmacion(id=${r.id})}" class="btn">Ver</a>
+                    <a th:href="@{/reservas/eliminar(id=${r.id})}" class="btn" 
+                       onclick="return confirm('¿Seguro que deseas cancelar esta reserva?');">
+                       Cancelar
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div th:if="${reservas == null or reservas.isEmpty()}" class="empty">
+        No tienes reservas registradas todavía.
+    </div>
+
+    <a th:href="@{/}" class="back">← Volver al inicio</a>
+</div>
+
+</body>
+</html>

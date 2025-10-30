@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Usuario</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Agregar el mismo CSS de fondo y estilo general del login aquí */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to right, #ff6ec7 0%, #fff 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px 60px;
+            width: 100%;
+            max-width: 400px;
+        }
+        h2 {
+            font-size: 26px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #333;
+        }
+        .form-group {
+            position: relative;
+            margin-bottom: 30px;
+        }
+        .form-group label {
+            position: absolute;
+            top: 12px;
+            left: 15px;
+            color: #aaa;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus {
+            border-color: #ff6ec7;
+        }
+        .form-group input:focus + label {
+            top: -10px;
+            left: 15px;
+            color: #ff6ec7;
+            font-size: 12px;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: #ff6ec7;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #ff3385;
+        }
+        .signup-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        .signup-link a {
+            color: #ff6ec7;
+            text-decoration: none;
+        }
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Registro de Usuario</h2>
+    <form th:action="@{/usuarios/registro}" th:object="${usuario}" method="post">
+        <div class="form-group">
+            <input type="text" id="login" th:field="*{login}" required />
+            <label for="login">Login</label>
+        </div>
+        <div class="form-group">
+            <input type="password" id="pass" th:field="*{pass}" required />
+            <label for="pass">Contraseña</label>
+        </div>
+        <div class="form-group">
+            <input type="text" id="nombre" th:field="*{nombre}" />
+            <label for="nombre">Nombre</label>
+        </div>
+        <div class="form-group">
+            <input type="text" id="apellidos" th:field="*{apellidos}" />
+            <label for="apellidos">Apellidos</label>
+        </div>
+        <div class="form-group">
+            <input type="text" id="direccion" th:field="*{direccion}" />
+            <label for="direccion">Dirección</label>
+        </div>
+        <button type="submit">Registrar</button>
+    </form>
+
+    <div class="signup-link">
+        <p>¿Ya tienes cuenta? <a href="/usuarios/login">Inicia sesión</a></p>
+    </div>
+</div>
+
+</body>
+</html>
