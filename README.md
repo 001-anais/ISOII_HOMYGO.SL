@@ -1,2 +1,2 @@
 # ISOII_HOMYGO.SL
-Actualizado
+Actualizar
