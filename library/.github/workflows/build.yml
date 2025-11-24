@@ -1,36 +1,39 @@
-name: SonarQube
+name: SonarCloud
+
 on:
   push:
-    branches:
-      - main
+    branches: [ "main", "master" ]
   pull_request:
     types: [opened, synchronize, reopened]
+
 jobs:
   build:
-    name: Build and analyze
+    name: Build and analyze on SonarCloud
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          fetch-depth: 0  # necesario para el análisis correcto
+
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
+          distribution: temurin
           java-version: 17
-          distribution: 'zulu' # Alternative distribution options are available.
-      - name: Cache SonarQube packages
-        uses: actions/cache@v4
-        with:
-          path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+
       - name: Cache Maven packages
         uses: actions/cache@v4
         with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
-      - name: Build and analyze
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-maven
+
+      - name: Build and analyze with SonarCloud
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=001-anais_ISOII_HOMYGO.SL
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+             -Dsonar.projectKey=001-anais_ISOII_HOMYGO.SL \
+             -Dsonar.organization=001-anais \
+             -Dsonar.host.url=https://sonarcloud.io
