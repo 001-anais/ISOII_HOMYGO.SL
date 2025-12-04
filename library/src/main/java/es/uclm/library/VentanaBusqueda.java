@@ -17,15 +17,15 @@ import java.util.stream.Collectors;
 public class VentanaBusqueda {
 
 
+
     @Autowired
     private InmuebleRepository inmuebleRepository;
 
     private final InmuebleRepository inmuebleRepository;
     
+
     @Autowired
-    public VentanaBusqueda(InmuebleRepository inmuebleRepository){
-        this.inmuebleRepository = inmuebleRepository;
-    }
+    private InmuebleRepository inmuebleRepository;
 
 
     // Muestra el formulario de búsqueda

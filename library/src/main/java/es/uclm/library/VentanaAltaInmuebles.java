@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class VentanaAltaInmuebles {
 
 
+
     @Autowired
     private GestorInmuebles gestorInmuebles;
 
@@ -21,6 +22,10 @@ public class VentanaAltaInmuebles {
         this.gestorInmuebles = gestorInmuebles;
     }
     
+
+    @Autowired
+    private GestorInmuebles gestorInmuebles;
+
 
     @GetMapping("/listar")
     public String listarInmuebles(Model model) {
@@ -33,6 +38,9 @@ public class VentanaAltaInmuebles {
         model.addAttribute("inmueble", new Inmueble());
         return "inmueble_nuevo";
     }
+
+
+    // Guardar inmueble (ahora funciona con fechas sin error 400)
 
 
     // Guardar inmueble (ahora funciona con fechas sin error 400)
