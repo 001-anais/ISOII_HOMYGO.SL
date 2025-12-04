@@ -16,12 +16,8 @@ import java.util.stream.Collectors;
 @Controller
 public class VentanaBusqueda {
 
-    private final InmuebleRepository inmuebleRepository;
-    
     @Autowired
-    public VentanaBusqueda(InmuebleRepository inmuebleRepository){
-        this.inmuebleRepository = inmuebleRepository;
-    }
+    private InmuebleRepository inmuebleRepository;
 
     // Muestra el formulario de búsqueda
     @GetMapping("/busqueda")
