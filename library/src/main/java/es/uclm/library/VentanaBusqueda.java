@@ -18,7 +18,7 @@ public class VentanaBusqueda {
 
     private final InmuebleRepository inmuebleRepository;
     
-    @Autorwired
+    @Autowired
     public VentanaBusqueda(InmuebleRepository inmuebleRepository){
         this.inmuebleRepository = inmuebleRepository;
     }
