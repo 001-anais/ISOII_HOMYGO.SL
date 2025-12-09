@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to right, #ff6ec7 0%, #fff 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px 60px;
+            width: 100%;
+            max-width: 800px;
+        }
+        h2 {
+            font-size: 26px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #ff6ec7;
+            color: white;
+        }
+        a {
+            color: #ff6ec7;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .back-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Listado de Reservas</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Inquilino</th>
+                <th>Inmueble</th>
+                <th>Fecha Inicio</th>
+                <th>Fecha Fin</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="r : ${reservas}">
+                <td th:text="${r.id}"></td>
+                <td th:text="${r.inquilino?.nombre}"></td>
+                <td th:text="${r.inmueble?.direccion}"></td>
+                <td th:text="${r.fechaInicio}"></td>
+                <td th:text="${r.fechaFin}"></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="back-link">
+        <p><a th:href="@{/reservas/nueva}">Crear nueva reserva</a></p>
+    </div>
+</div>
+
+</body>
+</html>
