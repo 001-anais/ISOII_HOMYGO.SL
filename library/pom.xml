@@ -22,6 +22,11 @@
 
     <properties>
         <java.version>17</java.version>
+
+        <!-- ⭐ Configuración SonarCloud ⭐ -->
+        <sonar.projectKey>001-anais_ISOII_HOMYGO.SL</sonar.projectKey>
+        <sonar.organization>001-anais</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
 
     <dependencies>
@@ -75,7 +80,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
-            <!-- ⭐ Plugin Sonar para ejecutar sonar:sonar ⭐ -->
+            <!-- ⭐ Plugin SonarCloud ⭐ -->
             <plugin>
                 <groupId>org.sonarsource.scanner.maven</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
