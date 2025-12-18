@@ -23,10 +23,10 @@
     <properties>
         <java.version>17</java.version>
 
-        <!-- ⭐ Configuración SonarCloud ⭐ -->
-        <sonar.projectKey>001-anais_ISOII_HOMYGO.SL</sonar.projectKey>
-        <sonar.organization>001-anais</sonar.organization>
-        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <!-- (Opcional, útil para P4 Sonar + cobertura) -->
+        <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+        <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+        <sonar.jacoco.reportPath>${project.basedir}/target/jacoco.exec</sonar.jacoco.reportPath>
     </properties>
 
     <dependencies>
@@ -62,7 +62,7 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- Tests -->
+        <!-- Tests (JUnit moderno, Mockito, etc.) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -80,14 +80,89 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
-            <!-- ⭐ Plugin SonarCloud ⭐ -->
+            <!-- Plugin Sonar para ejecutar sonar:sonar -->
             <plugin>
                 <groupId>org.sonarsource.scanner.maven</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
                 <version>3.10.0.2594</version>
             </plugin>
 
+            <!-- Maven Site (genera target/site/index.html) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.12.1</version>
+            </plugin>
+
+            <!-- JaCoCo: genera el jacoco.exec durante test y el informe durante package -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.11</version>
+                <executions>
+                    <execution>
+                        <id>jacoco-initialize</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+
+                    <execution>
+                        <id>jacoco-site</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
+
+    <!-- Informes HTML (Surefire + JaCoCo + JXR + Project Info) -->
+    <reporting>
+        <plugins>
+
+            <!-- Habilita la generación de informes en el site -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>3.4.5</version>
+            </plugin>
+
+            <!-- Informe de tests (Surefire Report) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+                <version>3.2.2</version>
+                <configuration>
+                    <skipEmptyReport>false</skipEmptyReport>
+                </configuration>
+            </plugin>
+
+            <!-- Referencias cruzadas a líneas de código -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jxr-plugin</artifactId>
+                <version>3.3.1</version>
+            </plugin>
+
+            <!-- Informe de cobertura en el site (JaCoCo) -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.11</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>report</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+
+        </plugins>
+    </reporting>
 
 </project>
